@@ -2,9 +2,6 @@
 
 import sys, argparse
 import os
-#from scipy.stats import chisquare
-#from scipy.stats import fisher_exact
-#from Fisher import fisher_exact
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 
@@ -16,9 +13,9 @@ def parseoptions( ):
     .... """
     #print " ".join( sys.argv )
     parser = argparse.ArgumentParser( description="" )
-    parser.add_argument( '-i',  '--infile', default="M-GO_MF.tab2",  help="tableau de contingence")
+    parser.add_argument( '-i',  '--infile', default="M-GO_MF.tab2",  help="contingency table")
     parser.add_argument( '-t',  '--threshold', default="0.05",  help="p value threshold, default 0.05")
-    parser.add_argument( '-r',  '--res', default="T",  help="T,Tv or F. T (default) shows result of Chi2; Tv shows result of Chi2 plus difference with expected count by col; F shows line where Chi2 is not applicable")
+    parser.add_argument( '-r',  '--res', default="T",  help="T or Tv. T (default) shows result of Fisher test; Tv shows result of  Fisher test plus the differences with expected count by col")
 
     global ARGS        # Update the global ARGS variable 
     ARGS = parser.parse_args()
@@ -100,15 +97,15 @@ def main():
 	     obs_thisGO, tot_thisGO = getThisGO(lS)
 	     # obs_thisGO = [ , , ,]   tot_thisGO =int 
 	     #print obs_thisGO, tot_thisGO	    
-	     #obs_GOsp = getObs_GOsp(obs_allGO, obs_thisGO) --------------TO MODIF IF REUSED----------------------
-	     #tot      = tot_thisGO + tot_allGO --------------TO MODIF IF REUSED----------------------
+	     #obs_GOsp = getObs_GOsp(obs_allGO, obs_thisGO) 
+	     #tot      = tot_thisGO + tot_allGO 
 
 	     obs_GOsp = obs_allGO	
 	     tot      = tot_allGO
  	     #print obs_GOsp , tot
 	     
 	     exp_thisGO	= getExpected(obs_GOsp, tot_thisGO, tot)
-	     #exp_allGO  = getExpected(obs_GOsp, tot_allGO, tot) ----------TO MODIF IF REUSED-----------------------
+	     #exp_allGO  = getExpected(obs_GOsp, tot_allGO, tot) 
        
 	     #print exp_thisGO, tot_thisGO
 	     #print exp_allGO, tot_allGO
@@ -119,7 +116,6 @@ def main():
 	     test = robjects.r['rbind'](robjects.IntVector(obs_thisGO),  robjects.IntVector(obs_allGO))
              #print test
 
-	     #value= stats.fisher_test(test, simulate.p.value=T ,  workspace=2e5)
 	     pvalue= stats.fisher_test(test,simulate_p_value="TRUE")
 	     pvalue= pvalue[0][0]
 	     #print 'p-value: {}'.format(pvalue[0][0])
@@ -133,7 +129,7 @@ def main():
 			while c < len(obs_thisGO):
 				temp=temp +","+str(int(obs_thisGO[c] - exp_thisGO[c]))
 				c=c+1
-			if ARGS.res == "Tv" :print temp, "'- : obs < exp, + obs > exp" # --------------------- UNCOMMENT THIS ONE --------------
+			if ARGS.res == "Tv" :print temp, "'- : obs < exp, + obs > exp" 
 			#print "obs_thisGO", obs_thisGO
          	        #print "exp_thisGO", exp_thisGO
 	
