@@ -15,10 +15,17 @@ def parseoptions( ):
     parser = argparse.ArgumentParser( description="" )
     parser.add_argument( '-i',  '--infile', default="M-GO_MF.tab2",  help="contingency table")
     parser.add_argument( '-t',  '--threshold', default="0.05",  help="p value threshold, default 0.05")
-    parser.add_argument( '-r',  '--res', default="T",  help="T or Tv. T (default) shows result of Fisher test; Tv shows result of  Fisher test plus the differences with expected count by col")
+    parser.add_argument( '-r',  '--res', default="T",  help="T or Tv. T (default) shows result of Fisher test (new col with p-value at the end of concerned line); Tv shows result of  Fisher test plus the differences with expected count by col")
 
     global ARGS        # Update the global ARGS variable 
     ARGS = parser.parse_args()
+	
+# INPUT SAMPLE
+#biological_process	chromosome segregation	1	6	0	8	6
+#biological_process	chromosome separation	0	2	0	0	0
+#biological_process	single-organism biosynthetic process	39	12	11	115	36
+#biological_process	cellular carbohydrate metabolic process	9	4	6	14	10
+	
 
 def getAllGO():
     with open(ARGS.infile,"r") as ef:
