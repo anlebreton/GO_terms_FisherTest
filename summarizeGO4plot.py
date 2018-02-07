@@ -16,7 +16,7 @@ def parseoptions( ):
     parser = argparse.ArgumentParser( description="" )
     parser.add_argument( '-i',  '--infile',default="MR-GO.tab",  help="[GO annotation, ID \t GO:1,GO:2 etc.]")
     parser.add_argument( '-obo',  '--obo',default="go-basic.obo",  help="[obo file]; I used the go-basic.obo file from http://geneontology.org/page/download-ontology ")
-    parser.add_argument( '-l',  '--level', default="2",  help="level in GO hierachy starting from the top, BP,CC and MF are at level 0")
+    parser.add_argument( '-l',  '--level', default="2",  help="level in GO hierachy starting from the top, BP,CC and MF are at level 0. levels here means number of relations 'is a' from the top")
     parser.add_argument( '-btw',  '--btw', default="No",  help="Yes - get GO between root and chosen level, default No ")
     parser.add_argument( '-d',  '--description', default="term.txt",  help="None or file path; default term.txt (file with the correspondance between GO id and GO description")
   
