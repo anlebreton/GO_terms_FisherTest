@@ -10,19 +10,23 @@ import calc_dists_to_top_of_GO_using_bfs
 ARGS = {}             # Global dictionary
 
 def parseoptions( ):
-    """ Docstring 
+    """ /!\ needs calc_dists_to_top_of_GO_using_bfs available at  https://gist.github.com/avrilcoghlan/8671799
     .... """
     #print " ".join( sys.argv )
     parser = argparse.ArgumentParser( description="" )
-    parser.add_argument( '-i',  '--infile',default="MR-GO.tab",  help="GO annotation")
-    parser.add_argument( '-obo',  '--obo',default="/projet/externe/ubo/alebreton/test_GO/go-basic.obo",  help="obo file; default /projet/externe/ubo/alebreton/test_GO/go-basic.obo ")
-    parser.add_argument( '-l',  '--level', default="2",  help="level in GO hierachy starting from the top, BP,CC and MF are at level 0")
+    parser.add_argument( '-i',  '--infile',default="MR-GO.tab",  help="[GO annotation, ID \t GO:1,GO:2 etc.]")
+    parser.add_argument( '-obo',  '--obo',default="go-basic.obo",  help="[obo file]; I used the go-basic.obo file from http://geneontology.org/page/download-ontology ")
+    parser.add_argument( '-l',  '--level', default="2",  help="level in GO hierachy starting from the top, BP,CC and MF are at level 0. levels here means number of relations 'is a' from the top")
     parser.add_argument( '-btw',  '--btw', default="No",  help="Yes - get GO between root and chosen level, default No ")
-    parser.add_argument( '-d',  '--description', default="/projet/externe/ubo/alebreton/script/scripts_appolo/term.txt",  help="None or file path; default: /projet/externe/ubo/alebreton/script/scripts_appolo/term.txt  ")
+    parser.add_argument( '-d',  '--description', default="term.txt",  help="None or file path; default term.txt (file with the correspondance between GO id and GO description")
   
     global ARGS        # Update the global ARGS variable 
     ARGS = parser.parse_args()
-    
+
+#INPUT EXAMPLE
+#MC|c4600_g1_i1-m.9872   GO:0007050,GO:0008570
+#MC|c7771_g1_i1-m.18561  GO:0008270
+#MC|c527_g1_i2-m.11866   GO:0005783,GO:0006487,GO:0006488,GO:0031965,GO:0016740,GO:0030176,GO:0004577
 
 def getGOToDisplay(parents):
     lstout=['GO:0003674','GO:0005575', 'GO:0008150']
